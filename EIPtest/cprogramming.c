@@ -1,4 +1,3 @@
-#include <stdio.h>
 
 // struct jsu{
 //     char nae[12];
@@ -17,11 +16,32 @@
 // 포인터 문제 포인터 문제 빈도가 높으니 깊은 이해가 필요함
 // 답 501
 //-------------------------
-main(){
-    char* p = "KOREA";
-    printf("%s\n", p);
-    printf("%s\n", p+3);
-    printf("%s\n", *p);
-    printf("%s\n", *(p+3));
-    printf("%s\n", *p+2);
+// main(){
+//     char* p = "KOREA";
+//     printf("%s\n", p);
+//     printf("%s\n", p+3);
+//     printf("%s\n", *p);
+//     printf("%s\n", *(p+3));
+//     printf("%s\n", *p+2);
+// }
+//-------------------------
+
+
+int r1(){
+    return 4;
 }
+
+int r10(){
+    return (30 + r1());
+}
+
+int r100(){
+    return (200 + r10());
+}
+
+int main(){
+    printf("%d/n", r100());
+    return 0;
+}
+
+// 재귀 호출 순서 잘 파악하기
