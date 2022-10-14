@@ -4,6 +4,7 @@ import com.syu.SpringPractice.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.annotation.Commit;
 
 import java.util.List;
 import java.util.Optional;
