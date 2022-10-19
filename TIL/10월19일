@@ -1,0 +1,10 @@
+1. 무엇을 공부하셨나요?
+    - code push에 대해서 공부하였다.
+2. 어떤 부분이 이해되지 않았나요?
+    1. 없음
+3. 어떤 부분이 이해되었나요?
+    1. codepush를 할 때 주의할 점을 알았다.
+    2. package.json에 보면 버전이 있는데 codepush는 세 번째 자리에 해당한다. 결국, 오류가 있을 때만 주로 코드 푸시를 한다. 외관적으로 많이 바뀌지만 상호호환이 된다면 그건 두 번째 자리를 올리면 된다.
+    3. codepush에는 Staging과 Production이 있다. 각각 key가 있는데, Staging 브랜치에서만 Staging key를 사용하게끔하고, Master 브랜치에서는 Production key를 사용하면 된다.
+    4. Production key와 Staging key를 서로 바꿔서 사용하면… 큰일난다…
+    5. Staging은 완전하게 오류 수정하고, 잘 되는지 확인할 때 사용하고, Production은 확인 다한 코드를 올릴 때 사용하는 것
