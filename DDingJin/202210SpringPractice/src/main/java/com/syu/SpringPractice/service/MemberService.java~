@@ -1,0 +1,39 @@
+package com.syu.SpringPractice.service;
+
+import com.syu.SpringPractice.domain.Member;
+import com.syu.SpringPractice.repository.MemberRepository;
+import com.syu.SpringPractice.repository.MemoryMemberRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MemberService {
+
+    private final MemberRepository memberRepository = new MemoryMemberRepository();
+
+
+    //회원가입
+    public Long join(Member member) {
+
+        //비즈니스 로직1. 중복 회원은 안된다
+        validateDuplicateMember(member); //중복회원 검증
+
+        memberRepository.save(member);
+        return member.getId();
+    }
+
+    public void validateDuplicateMember(Member member) {
+        memberRepository.findByName(member.getName())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원");
+                });
+    }
+
+    public List<Member> findMembers() {
+        
+    }
+
+
+}
