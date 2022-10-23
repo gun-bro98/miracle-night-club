@@ -1,8 +1,4 @@
-package Shopping.demo.service;
-
-import Shopping.demo.member.Member;
-import Shopping.demo.member.MemberRepository;
-import Shopping.demo.member.MemoryMemberRepository;
+package Shopping.demo.member;
 
 public class MemberServiceImpl implements MemberService{
 

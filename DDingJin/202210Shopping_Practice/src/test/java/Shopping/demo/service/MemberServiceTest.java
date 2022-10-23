@@ -2,10 +2,10 @@ package Shopping.demo.service;
 
 import Shopping.demo.member.Grade;
 import Shopping.demo.member.Member;
+import Shopping.demo.member.MemberService;
+import Shopping.demo.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MemberServiceTest {
 

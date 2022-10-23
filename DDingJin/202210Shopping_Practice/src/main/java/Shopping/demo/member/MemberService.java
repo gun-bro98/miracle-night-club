@@ -1,4 +1,4 @@
-package Shopping.demo.service;
+package Shopping.demo.member;
 
 import Shopping.demo.member.Member;
 
