@@ -66,3 +66,24 @@ function a4() {
   console.log(b);
 }
 a4();
+
+// 스코프 체인
+/* 
+스코프는 식별자에 대한 유효범위 -> 어떤 경계 A의 외부에서 선언한 변수는 A의 외부뿐 아니라 
+A의 내부에서도 접근이 가능하지만 A의 내부에서 선언한 변수는 오직 A의 내부에서만 접근가능 (지연변수 전역변수와 비슷)
+'식별자의 유효범위'를 안에서 부서 바깐으로 차례로 검색해 나간느 것을 '스코프 체인' 이라고한다.
+
+*/
+// 스코프 체인의 코드
+console.log("스코프 체인");
+var a = 1;
+var outer = function () {
+  var inner = function () {
+    console.log(a);
+    var a = 3;
+  };
+  inner();
+  console.log(a);
+};
+outer();
+console.log(a);
