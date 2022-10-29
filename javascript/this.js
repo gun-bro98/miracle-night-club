@@ -80,3 +80,37 @@ var objArrow = {
   },
 };
 objArrow.outer();
+
+// 생성자 함수
+var Cat = function (name, age) {
+  this.bark = "야옹";
+  this.name = name;
+  this.age = age;
+};
+
+var choco = new Cat("초코", 7);
+var nabi = new Cat("나비", 5);
+console.log(choco, nabi);
+
+// 명시적을 this를 바인딩하는 방법
+/* Call 메서드는 메서드의 호출 주체인 함수를 즉시 실행하도록 하는 명령이고 이때 call메서드의 첫번째 인자를 this로 바인딩
+이후의 인자들을 호출할 함수의 매개변수로 합니다 */
+
+//call 메서드
+var func = function (a, b, c) {
+  console.log(this, a, b, c);
+};
+func(1, 2, 3);
+func.call({ x: 1 }, 4, 5, 6);
+// 해당 출력문을 응용하면 임의의 객체를 this로 지정가능
+
+//call 메서드2
+var obj5 = {
+  a: 1,
+  method: function (x, y) {
+    console.log(this.a, x, y);
+  },
+};
+
+obj5.method(2, 3);
+obj5.method.call({ a: 4 }, 5, 6);
