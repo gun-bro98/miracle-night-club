@@ -95,19 +95,35 @@ class Car extends Vehicle {
 
 // 생성자와 형 변환에 관한 문제
 
+// public class javastudy {
+//     public static void main(String[] args) {
+//         int a = 0, sum = 0;
+//         while ( a < 10 ) {
+//             a++;
+//             if ( a % 2 == 1)
+//                 continue;
+//             sum += a;
+//             System.out.println("순서" + a);
+//             System.out.println(sum);
+//         }
+//         System.out.println(sum);
+//     }
+// }
+// 반복문이 어디까지 도는지 확실히 체크할 것
 public class javastudy {
+    public static int a = 5;
     public static void main(String[] args) {
-        int a = 0, sum = 0;
-        while ( a < 10 ) {
-            a++;
-            if ( a % 2 == 1)
-                continue;
-            sum += a;
-            System.out.println("순서" + a);
-            System.out.println(sum);
-        }
-        System.out.println(sum);
+       int b = 2;
+       cal(b);
+       cal(b);
+       System.out.printf("%d, %d\n", a, b);
+    }
+    static void cal(int b) {
+        if (b < a)
+            a -= 3;
+        else
+            b += 3;
     }
 }
-// 반복문이 어디까지 도는지 확실히 체크할 것
 
+// 답 2, 2 => 전역변수와 지역변수
