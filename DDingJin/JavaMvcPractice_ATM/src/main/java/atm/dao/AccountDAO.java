@@ -60,12 +60,23 @@ public class AccountDAO {
     }
 
 
-    //계좌 조회
+    //계좌 유무 조회 (회원 자신)
     public String[] getAccount(String sessionId) {
         accountList = accountModel.getAccountList();
         accountCount = accountModel.getAccountCount();
         for (int i = 0; i < accountCount; i++) {
             if(accountList[i][3].equals(sessionId))
+                return accountList[i];
+        }
+        return null;
+    }
+
+    //계좌 유무 조회 (송금 회원)
+    public String[] getAccount(String sessionId, String accountId) {
+        accountList = accountModel.getAccountList();
+        accountCount = accountModel.getAccountCount();
+        for (int i = 0; i < accountCount; i++) {
+            if(accountList[i][0].equals(accountId))
                 return accountList[i];
         }
         return null;
@@ -117,7 +128,7 @@ public class AccountDAO {
             if(accountList[i][3].equals(sendId)) {
                 temp = Integer.parseInt(accountList[i][2]);
                 temp -= amount;
-                accountList[i][2] = temp2[1];
+                accountList[i][2] = String.valueOf(temp);
             }
             if(accountList[i][0].equals(receiveAccount)) {
                 temp = Integer.parseInt(accountList[i][2]);
@@ -130,6 +141,38 @@ public class AccountDAO {
         return receiveId;
     }
 
+    //계좌 삭제 (회원탈퇴)
+    public void deleteAccount(String sessionId) {
+        accountList = accountModel.getAccountList();
+        accountCount = accountModel.getAccountCount();
+        String[][] accountTemp = new String[accountCount-1][4];
+
+        //Stream Copy
+        for (int i = 0; i < accountCount; i++) {
+            if (!accountList[i][3].equals(sessionId)) {
+                accountTemp[i][0] = accountList[i][0];
+                accountTemp[i][1] = accountList[i][1];
+                accountTemp[i][2] = accountList[i][2];
+                accountTemp[i][3] = accountList[i][3];
+            }
+        }
+        accountModel.setAccountList(accountTemp);
+        accountModel.setAccountCount(--accountCount);
+    }
+
+
+
+    //개인 계좌 정보 Export - <유저 사용가능>
+    public String[] getAccountData(String sessionId) {
+        accountList = accountModel.getAccountList();
+        accountCount = accountModel.getAccountCount();
+        for (int i = 0; i < accountCount; i++) {
+            if (accountList[i][3].equals(sessionId)) {
+                return accountList[i];
+            }
+        }
+        return null;
+    }
 
     //회원 정보 출력 - <관리자 전용>
     public void selectAllFromAccountPrint() {

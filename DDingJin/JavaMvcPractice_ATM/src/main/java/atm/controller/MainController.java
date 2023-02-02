@@ -65,6 +65,7 @@ public class MainController {
                         System.out.println("로그인 성공");
                         while(true) {
                             System.out.println("[" + currentSession + "님 로그인중]");
+                            System.out.println("[21]회원 테이블 출력    [22]계좌 테이블 출력");
                             System.out.println("[1]로그아웃 [2]정보수정 [3]정보확인 [4]회원탈퇴");
                             System.out.println("[5]입금   [6]이체   [7]잔액조회   [0]종료");
                             sel = scan.nextInt();
@@ -129,15 +130,24 @@ public class MainController {
                             // [3]정보확인
                             else if (sel == 3) {
                                 memberData = memberDAO.getMemberData(currentSession);
-                                if(memberData == null) break;
+                                accountData = accountDAO.getAccountData(currentSession);
+                                if(memberData == null) continue;
                                 System.out.println("=== 회원님의 계정 정보 ===");
                                 System.out.print("   [0]일렬번호=" + memberData[0]);
                                 System.out.print("   [1]아이디=" + memberData[1]);
                                 System.out.print("   [2]비밀번호=" + memberData[2]);
                                 System.out.print("   [3]성함=" + memberData[3]);
                                 System.out.println();
-                                System.out.println("======");
-                                //TODO:계좌 조회 추가
+
+                                if(accountData == null) {
+                                    System.out.println("=== 계좌가 아직 개설되지 않았습니다! ===");
+                                    continue;
+                                }
+                                System.out.println("=== 회원님의 계좌 정보 ===");
+                                System.out.print("   [0]계좌번호=" + accountData[0]);
+                                System.out.print("   [1]????=" + accountData[1]);
+                                System.out.print("   [2]잔액=" + accountData[2]);
+                                System.out.println();
 
                             }
                             // [4]회원탈퇴
@@ -149,7 +159,7 @@ public class MainController {
                                 editData = scan.next();
                                 if(editData.equals("Y")) {
                                     memberDAO.deleteMember(currentSession);
-                                    //TODO : 계좌도 삭제하기
+                                    accountDAO.deleteAccount(currentSession);
                                     currentSession = "";
                                     editData = "";
                                     System.out.println("회원님의 데이터가 삭제되었습니다.");
@@ -202,9 +212,13 @@ public class MainController {
                                     editData = scan.next();
 
                                     //계좌가 존재하는지 확인
-                                    accountData = accountDAO.getAccount(editData);
+                                    accountData = accountDAO.getAccount(currentSession, editData);
                                     if (accountData == null) {
                                         System.out.println("해당 계좌번호는 존재하지 않습니다.");
+                                        exitCnt++;
+                                        continue;
+                                    } else if(accountData[3].equals(currentSession)) {
+                                        System.out.println("자기 자신의 계좌로 송금할 수 없습니다.");
                                         exitCnt++;
                                         continue;
                                     }
@@ -220,19 +234,25 @@ public class MainController {
                                     }
 
                                     String receiveId = accountDAO.transfer(currentSession, editData, sel);
-                                    System.out.println(receiveId + "님에게 "+ editData +"원을 송금 하였습니다.");
+                                    System.out.println(receiveId + "님에게 "+ sel +"원을 송금 하였습니다.");
+                                    accountData = accountDAO.getAccount(currentSession);
                                     System.out.println("현재 계좌 잔액은 " + accountData[2] + "원 입니다.");
                                     sel = -1;
                                     break;
                                 }
                             }
                             // [7]잔액조회
+                            else if (sel == 7) {
+                                accountData = accountDAO.getAccount(currentSession);
+                                System.out.println("현재 계좌 잔액은 " + accountData[2] + "원 입니다.");
+                            }
                             // [0]종료
-
-
-                            else if (sel == 999) {       //★★★★★★★테스트코드★★★★★★★
+                            else if (sel == 0) {
+                                System.out.println("프로그램을 종료합니다..");
+                                System.exit(0);
+                            } else if (sel == 21) {
                                 memberDAO.selectAllFromMemberPrint();
-                            } else if (sel == 888) {
+                            } else if (sel == 22) {
                                 accountDAO.selectAllFromAccountPrint();
                             } else System.out.println("잘못된 선택지 입니다.");
                         }
@@ -242,9 +262,9 @@ public class MainController {
                         System.out.println("로그인 실패. 아이디 또는 비빌번호가 올바르지 않습니다.");
                     }
 
-                } else if (sel == 999) {    //★★★★★★★테스트코드★★★★★★★
+                } else if (sel == 21) {
                     memberDAO.selectAllFromMemberPrint();
-                } else if (sel == 888) {
+                } else if (sel == 22) {
                     accountDAO.selectAllFromAccountPrint();
                 }
                 //[0]종료
@@ -257,6 +277,7 @@ public class MainController {
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 선택지 입니다.");
                 currentSession = "";
+                scan.next();
             }
 
         }

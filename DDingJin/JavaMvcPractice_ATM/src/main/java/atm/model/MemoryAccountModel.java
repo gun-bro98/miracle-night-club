@@ -22,7 +22,6 @@ public class MemoryAccountModel {
     }
 
     public void setAccountList(String[][] accountList) {
-        //TODO : 검증 로직
         this.accountList = accountList;
     }
 }
